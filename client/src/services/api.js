@@ -3,7 +3,7 @@ import axios from "axios";
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const API = axios.create({
-  baseURL: `${BASE_URL}api`,
+  baseURL: `${BASE_URL}/api`,
   headers: { "Content-Type": "application/json" }
 });
 
@@ -43,4 +43,9 @@ export const updateCar = (id, carData, token) => {
 export const deleteCar = (id, token) => {
   console.log("deleteCar token:", token); // Debugging token
   return API.delete(`/cars/${id}`, { headers: { Authorization: `Bearer ${token}` } });
+};
+
+// Assuming getCar is defined in api.js to fetch a single car by ID
+export const getCar = (id, token) => {
+  return API.get(`/cars/${id}`, { headers: { Authorization: `Bearer ${token}` } });
 };

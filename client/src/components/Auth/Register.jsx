@@ -15,7 +15,7 @@ const Register = () => {
     try {
       const { data } = await registerUser(userData); // Register user via API
       localStorage.setItem("token", data.token); // Store token in localStorage
-      navigate("/cars"); // Redirect to cars list page after successful registration
+      navigate("/login"); // Redirect to cars list page after successful registration
     } catch (error) {
       console.error("Registration error:", error.response?.data || error.message);
     }
