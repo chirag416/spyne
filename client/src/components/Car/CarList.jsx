@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getCars } from "../../services/api";
+import { getCars, deleteCar } from "../../services/api"; // Assume deleteCar is an API call for deleting a car
 import { useNavigate } from "react-router-dom";
 
 const CarList = () => {
@@ -10,7 +10,6 @@ const CarList = () => {
   useEffect(() => {
     const fetchCars = async () => {
       const token = localStorage.getItem("token");
-
       if (!token) {
         navigate("/login");
         return;
@@ -32,6 +31,18 @@ const CarList = () => {
 
     fetchCars();
   }, [navigate]);
+
+  const handleDelete = async (id) => {
+    const token = localStorage.getItem("token");
+    try {
+      await deleteCar(id, token);
+      setCars(cars.filter((car) => car._id !== id)); // Remove deleted car from state
+      alert("Car deleted successfully");
+    } catch (error) {
+      console.error("Failed to delete car:", error);
+      alert("Error deleting car");
+    }
+  };
 
   const filteredCars = cars.filter(
     (car) =>
@@ -57,11 +68,12 @@ const CarList = () => {
           <div
             key={car._id}
             style={{ marginBottom: "20px", border: "1px solid #ccc", padding: "10px", cursor: "pointer" }}
-            onClick={() => navigate(`/cars/${car._id}`)} // Navigate to car details
           >
-            <h3>{car.title}</h3>
+            <h3 onClick={() => navigate(`/cars/${car._id}`)}>{car.title}</h3>
             <p>{car.description.length > 50 ? `${car.description.slice(0, 50)}...` : car.description}</p>
             <p>Tags: {car.tags.join(", ")}</p>
+            <button onClick={() => navigate(`/cars/edit/${car._id}`)}>Edit</button>
+            <button onClick={() => handleDelete(car._id)}>Delete</button>
           </div>
         ))
       ) : (

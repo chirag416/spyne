@@ -22,19 +22,6 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.log(err));
 
-// Multer configuration for image uploads
-// const storage = multer.diskStorage({
-//     destination: (req, file, cb) => {
-//         cb(null, './uploads'); // Save files in the uploads directory
-//     },
-//     filename: (req, file, cb) => {
-//         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-//         cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname)); // Unique filename
-//     }
-// });
-
-// const upload = multer({ storage: storage });
-
 // Routes
 
 app.use("/api/auth", authRoutes);

@@ -5,6 +5,7 @@ import Register from "./components/Auth/Register";
 import CarList from "./components/Car/CarList";
 import CarForm from "./components/Car/CarForm";
 import CarDetail from "./components/Car/CarDetail";
+import CarEdit from "./components/Car/CarEdit";
 import HomePage from "./Home";
 
 const App = () => {
@@ -17,6 +18,7 @@ const App = () => {
         <Route path="/cars" element={<CarList />} />
         <Route path="/create" element={<CarForm />} />
         <Route path="/cars/:id" element={<CarDetail />} />
+        <Route path="/cars/edit/:id" element={<CarEdit />} />
       </Routes>
     </Router>
   );

@@ -39,7 +39,7 @@ const CarDetail = () => {
       <div>
         {car.images && car.images.length > 0 ? (
           car.images.map((image, index) => (
-            <img key={index} src={`${BASE_URL}${image}`} alt={`Car Image ${index + 1}`} style={{ maxWidth: "40", marginBottom: "10px" }} />
+            <img key={index} src={`${BASE_URL}${image}`} alt={`Car Image ${index + 1}`} style={{ maxWidth: "40%", marginBottom: "10px" }} />
           ))
         ) : (
           <p>No images available</p>
