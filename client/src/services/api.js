@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://spyne-backend-20tt.onrender.com';
 
 const API = axios.create({
   baseURL: `${BASE_URL}/api`,
