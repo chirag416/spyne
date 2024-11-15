@@ -67,9 +67,9 @@ const CarList = () => {
         filteredCars.map((car) => (
           <div
             key={car._id}
-            style={{ marginBottom: "20px", border: "1px solid #ccc", padding: "10px", cursor: "pointer" }}
+            style={{ marginBottom: "20px", border: "1px solid #ccc", padding: "10px" }}
           >
-            <h3 onClick={() => navigate(`/cars/${car._id}`)}>{car.title}</h3>
+            <h3 style={{ cursor: "pointer"}} onClick={() => navigate(`/cars/${car._id}`)}>{car.title}</h3>
             <p>{car.description.length > 50 ? `${car.description.slice(0, 50)}...` : car.description}</p>
             <p>Tags: {car.tags.join(", ")}</p>
             <button onClick={() => navigate(`/cars/edit/${car._id}`)}>Edit</button>

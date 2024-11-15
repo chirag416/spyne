@@ -1,0 +1,300 @@
+{
+	"info": {
+		"_postman_id": "17ff6da1-a07b-45b7-833a-1580b2d16b8d",
+		"name": "CarManagement",
+		"description": "**Auth Endpoints**\n\n- **Register User**:\n    \n    - `POST /api/auth/register` - Registers a new user with `username`, `email`, and `password`.\n        \n    - **Response**: Returns user info and a JWT token.\n        \n    - **Error**: 400 for missing fields or user already exists.\n        \n- **Login User**:\n    \n    - `POST /api/auth/login` - Logs in the user with `email` and `password`.\n        \n    - **Response**: Returns user info and a JWT token.\n        \n    - **Error**: 400 for invalid credentials.\n        \n- **Get User Profile**:\n    \n    - `GET /api/auth/profile` - Retrieves the authenticated user's profile using the JWT token in `Authorization`.\n        \n    - **Response**: Returns user profile info.\n        \n    - **Error**: 401 for unauthorized access.\n        \n\n---\n\n### **Car Endpoints**\n\n- **Create Car**:\n    \n    - `POST /api/cars` - Adds a new car with `title`, `description`, `tags`, and optional `images`.\n        \n    - **Response**: Returns the created car.\n        \n    - **Error**: 500 for server issues.\n        \n- **Get All Cars**:\n    \n    - `GET /api/cars` - Retrieves all cars for the authenticated user.\n        \n    - **Response**: Returns a list of cars.\n        \n    - **Error**: 500 for server issues.\n        \n- **Get Car by ID**:\n    \n    - `GET /api/cars/:id` - Retrieves a single car by its ID.\n        \n    - **Response**: Returns car details.\n        \n    - **Error**: 404 for car not found or not owned by the user.\n        \n- **Update Car**:\n    \n    - `PUT /api/cars/:id` - Updates a car's `title`, `description`, `tags`, and adds new images.\n        \n    - **Response**: Returns updated car details.\n        \n    - **Error**: 404 for car not found or not owned by the user.\n        \n- **Delete Car**:\n    \n    - `DELETE /api/cars/:id` - Deletes a car by its ID.\n        \n    - **Response**: Confirms car deletion.\n        \n    - **Error**: 404 for car not found or not owned by the user.\n        \n\n---\n\n### **File Uploads**\n\n- **Image Upload**:\n    \n    - Uploads up to 10 images with car creation and updates.\n        \n    - Files are stored in the `/uploads` directory.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27551937"
+	},
+	"item": [
+		{
+			"name": "RegisterUser",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"test\",\r\n  \"email\": \"test@gmail.com\",\r\n  \"password\": \"123\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base-url}}/api/auth/register",
+					"host": [
+						"{{base-url}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"register"
+					]
+				},
+				"description": "\n### Register User\n\nThis endpoint allows users to register with the application.\n\n#### Request Body\n- `username` (string, required): The username of the user.\n- `email` (string, required): The email address of the user.\n- `password` (string, required): The password for the user account.\n\n#### Response (JSON Schema)\n```json\n{\n    \"type\": \"object\",\n    \"properties\": {\n        \"_id\": {\n            \"type\": \"string\"\n        },\n        \"username\": {\n            \"type\": \"string\"\n        },\n        \"email\": {\n            \"type\": \"string\"\n        },\n        \"token\": {\n            \"type\": \"string\"\n        }\n    }\n}\n```\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"test@gmail.com\",\r\n  \"password\": \"123\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base-url}}/api/auth/login",
+					"host": [
+						"{{base-url}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				},
+				"description": "\n### User Login\n\nThis endpoint allows users to log in to the application.\n\n#### Request Body\n- `email` (string, required): The email address of the user.\n- `password` (string, required): The password for the user account.\n\n#### Response\n- `status` (number): The HTTP status code of the response.\n- `Content-Type` (string): The type of content in the response.\n- `body` (object):\n    - `_id` (string): The unique identifier of the user.\n    - `username` (string): The username of the user.\n    - `email` (string): The email address of the user.\n    - `token` (string): The authentication token for the user session.\n\nThe last call to this request used the following payload with the raw request body type:\n```json\n{\n  \"email\": \"test@gmail.com\",\n  \"password\": \"123\"\n}\n```\n\nThe last execution returned the following response:\n```json\n{\n  \"_id\": \"\",\n  \"username\": \"\",\n  \"email\": \"\",\n  \"token\": \"\"\n}\n"
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllCar",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MzY3ODBjMTYzZDM3NGVjM2VlNWJlNyIsImlhdCI6MTczMTYyMzQxMywiZXhwIjoxNzM0MjE1NDEzfQ.PR5bREAT4sUaMtpGePR1SVIE3Z-dEAqu9QpL1qZP1JQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base-url}}/api/cars",
+					"host": [
+						"{{base-url}}"
+					],
+					"path": [
+						"api",
+						"cars"
+					]
+				},
+				"description": "### Get All Cars\n\nThis endpoint retrieves a list of cars from the application.\n\n#### Request\n\n- Method: GET\n    \n- URL: `{{base-url}}/api/cars`\n    \n\n#### Response\n\n- Status: 200\n    \n- Content-Type: application/json\n    \n\nExample Response Body:\n\n``` json\n[\n    {\n        \"_id\": \"string\",\n        \"user\": \"string\",\n        \"title\": \"string\",\n        \"description\": \"string\",\n        \"tags\": [\"string\"],\n        \"images\": [\"string\"],\n        \"__v\": 0\n    }\n]\n\n ```"
+			},
+			"response": []
+		},
+		{
+			"name": "CreateCar",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MzY3ODBjMTYzZDM3NGVjM2VlNWJlNyIsImlhdCI6MTczMTYyMzQxMywiZXhwIjoxNzM0MjE1NDEzfQ.PR5bREAT4sUaMtpGePR1SVIE3Z-dEAqu9QpL1qZP1JQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "title",
+							"value": "Mercedes GLA",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "The Mercedes-Benz GLA is a compact luxury SUV that combines a sporty look with an off-road feel. Here are some of its features: \nDesign: The GLA has a compact, dynamic design with a three-box structure and sharp lines. The AMG line adds 19-inch wheels and chrome accents. \nEngine: The GLA has a range of petrol and diesel 4-cylinder engines. The 1.3-liter turbo-petrol engine produces 163 PS of power, while the 2-liter diesel engine produces 190 PS of power. ",
+							"type": "text"
+						},
+						{
+							"key": "tags",
+							"value": "Mercedes, GLA, Classic, Expensive",
+							"type": "text"
+						},
+						{
+							"key": "images",
+							"type": "file",
+							"src": "/C:/Users/chira/Downloads/projects-background.jpeg"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base-url}}/api/cars",
+					"host": [
+						"{{base-url}}"
+					],
+					"path": [
+						"api",
+						"cars"
+					]
+				},
+				"description": "### Add New Car\n\nThis endpoint allows users to add a new car to the application.\n\n#### Request Body\n\n- `title` (text, required): The title of the car.\n    \n- `description` (text, required): The description of the car.\n    \n- `tags` (text, required): The tags associated with the car.\n    \n- `images` (file, required): The image of the car.\n    \n\n#### Response (JSON Schema)\n\n``` json\n{\n    \"type\": \"object\",\n    \"properties\": {\n        \"user\": {\n            \"type\": \"string\"\n        },\n        \"title\": {\n            \"type\": \"string\"\n        },\n        \"description\": {\n            \"type\": \"string\"\n        },\n        \"tags\": {\n            \"type\": \"array\",\n            \"items\": {\n                \"type\": \"string\"\n            }\n        },\n        \"images\": {\n            \"type\": \"array\",\n            \"items\": {\n                \"type\": \"string\"\n            }\n        },\n        \"_id\": {\n            \"type\": \"string\"\n        },\n        \"__v\": {\n            \"type\": \"number\"\n        }\n    }\n}\n\n ```"
+			},
+			"response": []
+		},
+		{
+			"name": "GetSingleCarById",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MzY3ODBjMTYzZDM3NGVjM2VlNWJlNyIsImlhdCI6MTczMTYyMzQxMywiZXhwIjoxNzM0MjE1NDEzfQ.PR5bREAT4sUaMtpGePR1SVIE3Z-dEAqu9QpL1qZP1JQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base-url}}/api/cars/67367bc9163d374ec3ee5bea",
+					"host": [
+						"{{base-url}}"
+					],
+					"path": [
+						"api",
+						"cars",
+						"67367bc9163d374ec3ee5bea"
+					]
+				},
+				"description": "### Get Single Car Using Its ID\n\nThis endpoint allows users to add a new car to the application.\n\n#### Request\n\n- Method: GET\n    \n- URL: `{{base-url}}/api/cars/67367bc9163d374ec3ee5bea`\n    \n\n#### Query Parameters\n\n- None\n    \n\n#### Response\n\nThe response will be in JSON format with the following properties:\n\n- `user` (string): The user associated with the car.\n    \n- `title` (string): The title of the car.\n    \n- `description` (string): The description of the car.\n    \n- `tags` (array of strings): The tags associated with the car.\n    \n- `images` (array of strings): The image URLs of the car.\n    \n- `_id` (string): The ID of the car.\n    \n- `__v` (number): Version of the car data."
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateData",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MzY3ODBjMTYzZDM3NGVjM2VlNWJlNyIsImlhdCI6MTczMTYyMzQxMywiZXhwIjoxNzM0MjE1NDEzfQ.PR5bREAT4sUaMtpGePR1SVIE3Z-dEAqu9QpL1qZP1JQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "title",
+							"value": "BMW X8",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "BMW X8 is a 5 seater SUV with the last recorded price of Rs. 1.04 - 1.11 Crore. It is available in 6 variants, 2998 cc engine option and 1 transmission option : Automatic. Other key specifications of the X6 include a ground clearance of 216 mm. and The X6 is available in 8 colours. BMW X6 mileage is 10.3 kmpl.",
+							"type": "text"
+						},
+						{
+							"key": "tags",
+							"value": "X8, Luxury, Costly",
+							"type": "text"
+						},
+						{
+							"key": "images",
+							"type": "file",
+							"src": "/C:/Users/chira/Downloads/cursor.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base-url}}/api/cars/67367bc9163d374ec3ee5bea",
+					"host": [
+						"{{base-url}}"
+					],
+					"path": [
+						"api",
+						"cars",
+						"67367bc9163d374ec3ee5bea"
+					]
+				},
+				"description": "### Update Car Details\n\nThis endpoint is used to update the details of a specific car in the application.\n\n#### Request\n\n- Method: PUT\n    \n- URL: `{{base-url}}/api/cars/67367bc9163d374ec3ee5bea`\n    \n- Body (form-data):\n    \n    - `title` (text): Description of the car.\n        \n    - `description` (text): Description of the car.\n        \n    - `tags` (text): Tags associated with the car.\n        \n    - `images` (file): Images of the car.\n        \n\n#### Response\n\nThe response will be in JSON format with the following properties:\n\n``` json\n{\n    \"_id\": \"string\",\n    \"user\": \"string\",\n    \"title\": \"string\",\n    \"description\": \"string\",\n    \"tags\": [\"string\"],\n    \"images\": [\"string\"],\n    \"__v\": 0\n}\n\n ```"
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteCar",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MzY3ODBjMTYzZDM3NGVjM2VlNWJlNyIsImlhdCI6MTczMTYyMzQxMywiZXhwIjoxNzM0MjE1NDEzfQ.PR5bREAT4sUaMtpGePR1SVIE3Z-dEAqu9QpL1qZP1JQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base-url}}/api/cars/67367bc9163d374ec3ee5bea",
+					"host": [
+						"{{base-url}}"
+					],
+					"path": [
+						"api",
+						"cars",
+						"67367bc9163d374ec3ee5bea"
+					]
+				},
+				"description": "### Delete Car\n\nThis endpoint is used to delete a specific car from the application.\n\n#### Request\n\n- Method: DELETE\n    \n- URL: `{{base-url}}/api/cars/67367bc9163d374ec3ee5bea`\n    \n\n#### Response\n\nThe response will be in JSON format with the following properties:\n\n``` json\n{\n    \"message\": \"string\"\n}\n\n ```"
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MzRmOWFhMWRhNDQwYTUzY2IzZjNkNSIsImlhdCI6MTczMTUzMTAzMiwiZXhwIjoxNzM0MTIzMDMyfQ.fiKMHn6kzeJq1slJWWrgF8GhEAVko3mpitMfVpdgN0E",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"var baseUrl = \"http://localhost:5000\"\r",
+					"pm.environment.set(\"base-url\", baseUrl)"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
